@@ -1,0 +1,22 @@
+{
+  "name": "ms-nodejs-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
+    "log4js": "^6.3.0cd",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-alpha.1",
+    "swagger-tools": "^0.10.4"
+  }
+}

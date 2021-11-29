@@ -1,0 +1,207 @@
+swagger: '2.0'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: Simple Employees API
+  # put the contact info for your development or API team
+  contact:
+    email: aolfa@outbox.community
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+# tags are used for organizing operations
+tags:
+  - name: admins
+    description: Secured Admin-only calls
+  - name: developers
+    description: Operations available to regular developers
+
+paths:
+  /employee/delete/${employeeId}:
+    delete:
+      tags:
+        - admins
+      summary: delete an employee
+      x-swagger-router-controller: employeesController
+      operationId: deleteEmployee
+      description: |
+        By passing in the appropriate options, you can search for
+        available employee in the system
+      parameters:
+        - in: header
+          name: x-request-id
+          description: Unique Identifier for the request
+          required: true
+          type: string
+        - in: path
+          name: employeeId
+          type: string
+          required: true
+          description: Numeric ID of employee
+      produces:
+        - application/json
+
+      responses:
+        200:
+          description: successfully deleted
+        400:
+          description: bad input parameter
+  /employee/list:
+    get:
+      tags:
+        - developers
+      summary: searches employee
+      x-swagger-router-controller: employeesController
+      operationId: searchEmployee
+      description: |
+        By passing in the appropriate options, you can search for
+        available employee in the system
+      produces:
+        - application/json
+      parameters:
+
+        - in: header
+          name: x-request-id
+          description: Unique Identifier for the request
+          required: true
+          type: string
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up inventory
+          required: false
+          type: string
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          type: integer
+          format: int32
+          minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 50
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EmployeeItem'
+        400:
+          description: bad input parameter
+  /employee/create:
+    post:
+      tags:
+        - admins
+      summary: create an employee item
+      x-swagger-router-controller: employeesController
+      operationId: create
+      description: Create or update an employee in the system
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-request-id
+          description: Unique Identifier for the request
+          required: true
+          type: string
+        - in: body
+          name: employeeItem
+          description: Inventory item to add
+          schema:
+            $ref: '#/definitions/EmployeeItem'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+
+  /employee/update/${employeeId}:
+    post:
+      tags:
+        - admins
+      summary: create an employee item
+      x-swagger-router-controller: employeesController
+      operationId: create
+      description: Create or update an employee in the system
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: x-request-id
+          description: Unique Identifier for the request
+          required: true
+          type: string
+        - in: path
+          name: employeeId
+          type: string
+          required: true
+          description: Numeric ID of employee
+        - in: body
+          name: employeeItem
+          description: Inventory item to add
+          schema:
+            $ref: '#/definitions/EmployeeItem'
+      responses:
+        201:
+          description: item created
+        400:
+          description: invalid input, object invalid
+        409:
+          description: an existing item already exists
+definitions:
+  EmployeeItem:
+    type: object
+    required:
+      - employeeId
+      - firstName
+      - lastName
+      - company
+    properties:
+      employeeId:
+        $ref: "#/definitions/EmployeeId"
+      firstName:
+        type: string
+        example: Olfa
+      lastName:
+        type: string
+        example: Arfani
+#      hireDate:
+#        type: string
+#        format: date-time
+#        example: 2016-08-29T09:12:33.001Z
+      company:
+        type: string
+        description: "Company name"
+        example: ACME
+      phone:
+        type: string
+        example: "529-187-00023"
+        #pattern: '^\d{3}-\d{3}-\d{4}$'
+      email:
+        type: string
+        example: olfa@acme-corp.com
+        format: email
+  EmployeeId:
+    type: string
+    format: uuid
+    example: d290f1ee-6c54-4b01-90e6-d701748f0851
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /olfa-arfani/employees-api/1.0.0
+schemes:
+  - https
+
+
+#First name (required), last name (required), Company (foreign key to Companies), email, phone
