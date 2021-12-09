@@ -155,11 +155,9 @@ paths:
             $ref: '#/definitions/EmployeeItem'
       responses:
         201:
-          description: item created
+          description: item updated
         400:
           description: invalid input, object invalid
-        409:
-          description: an existing item already exists
 definitions:
   EmployeeItem:
     type: object

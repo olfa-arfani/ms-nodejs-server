@@ -58,7 +58,7 @@ paths:
       operationId: findAll
       description: |
         By passing in the appropriate options, you can search for
-        available employee in the system
+        available company in the system
       produces:
         - application/json
       parameters:
@@ -102,7 +102,7 @@ paths:
       summary: create an company item
       x-swagger-router-controller: companiesController
       operationId: create
-      description: Create or update an employee in the system
+      description: Create or update an company in the system
       consumes:
         - application/json
       produces:
@@ -133,7 +133,7 @@ paths:
       summary: update an company item
       x-swagger-router-controller: companiesController
       operationId: update
-      description: Create or update an employee in the system
+      description: Create or update a company in the system
       consumes:
         - application/json
       produces:
@@ -179,8 +179,8 @@ definitions:
         example:  https://www.acme-corp.com
       phone:
         type: string
-        example: 408-867-5309
-        pattern: '^\d{3}-\d{3}-\d{4}$'
+        example: "+33493685498"
+        pattern: '^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$'
     
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
